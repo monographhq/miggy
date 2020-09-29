@@ -12,7 +12,8 @@
     "1.0.1": "^1.0.0",
     "@wavma/enhance": "^1.0.1",
     "esm": "^3.2.25",
-    "hotkeys-js": "^3.8.1"
+    "hotkeys-js": "^3.8.1",
+    "scrollbooster": "^3.0.2"
   },
   "name": "@wavma/enhance",
   "description": "![Image of Enhance](enhance.png)",

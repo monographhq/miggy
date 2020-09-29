@@ -1,148 +1,62 @@
-import { disableDefault } from "./events.js";
-import drag from "./drag.js";
-import zoom from "./zoom.js";
-import keyboard from "./keyboard.js";
+import project from "./project.js";
+import row from "./row.js";
+import ScrollBooster from "../node_modules/scrollbooster/src/index.js";
+
+const left = document.querySelector(".left");
+
+const setOpacity = (e) => {
+  const opacity = Math.min(
+    Math.max((300 - parseInt(e.position.x)) / 300, 0),
+    1
+  );
+  const scale = opacity * (1 - 0.95) + 0.95;
+
+  left.style.opacity = opacity;
+  left.style.transform = `scale(${scale})`;
+};
 
 export default function(options = {}) {
   let parent = null;
+  const today = new Date();
+  const projects = [];
   let opts = {};
-  let pbox = {};
-  const state = {
-    scale: 1,
-    element: null,
-    xoff: 0,
-    yoff: 0,
-  };
 
   const setup = () => {
-    const defaults = {
-      scale: "contain", // "contain", "cover", or 0.5, 1, 2.5 (float)
-      max: 50, // Maximum zoom scale, Firefox struggles past 5.
-      min: 0.1, // Minimum zoom scale
-      position: "50 50", // "0 0", "100 100"
-      offset: 0, // default X, Y offset on load and reset
-      keyboard: true, // enable keyboard shortcuts
-      trackpad: true, // enable trackpad pinch-to-zoom and pan
-      pan: false, // enable panning by holding down spacebar and dragging on canvas
-      window: false, // enable zoom window selection
-    };
+    const defaults = {};
     opts = Object.assign(defaults, options);
 
     if (options.parent) init(options.parent);
-    if (options.element) element();
   };
 
   const init = (newParent) => {
     parent = newParent;
-    pbox = getBBox(newParent);
-
-    if (options.element) element();
+    const projects = generateProjects();
+    render(projects);
     addEventListeners();
   };
 
-  const scaleFactor = (scale) => {
-    return Math.sqrt(scale) * 0.02;
+  const generateProjects = () => {
+    return Array.from({ length: 5 }, (x, i) => project(i, today));
   };
 
-  const getBBox = (el) => {
-    if (el instanceof SVGElement) {
-      return {
-        x: parseFloat(el.getAttribute("x")) || 0,
-        y: parseFloat(el.getAttribute("y")) || 0,
-        width: parseFloat(el.getAttribute("width")),
-        height: parseFloat(el.getAttribute("height")),
-      };
-    }
-    return el.getBoundingClientRect();
-  };
-
-  const setElementSize = (el) => {
-    let x, y, width, height;
-    ({ x, y, width, height } = getBBox(el));
-    setSize({ x, y, width, height });
-  };
-
-  const setSize = (box = {}) => {
-    const deltaWidth = (pbox.width - opts.offset * 2) / box.width;
-    const deltaHeight = (pbox.height - options.offset * 2) / box.height;
-
-    if (deltaWidth < deltaHeight) {
-      state.scale = deltaWidth;
-      state.xoff = pbox.width - (box.width - box.x) * state.scale - opts.offset;
-      state.yoff = (pbox.height - box.height * state.scale) / 2;
-    } else {
-      state.scale = deltaHeight;
-      state.xoff = (pbox.width - box.width * state.scale) / 2;
-      state.yoff = pbox.height - box.height * state.scale - opts.offset;
-    }
-
-    render();
-  };
-
-  const touchPanZoom = (e) => {
-    e.preventDefault();
-
-    if (e.ctrlKey || e.metaKey) {
-      const xs = (e.clientX - pbox.x - state.xoff) / state.scale;
-      const ys = (e.clientY - pbox.y - state.yoff) / state.scale;
-
-      state.scale -= e.deltaY * scaleFactor(state.scale);
-      state.scale = Math.min(Math.max(state.scale, opts.min), opts.max);
-
-      state.xoff = e.clientX - pbox.x - xs * state.scale;
-      state.yoff = e.clientY - pbox.y - ys * state.scale;
-    } else {
-      state.xoff -= e.deltaX;
-      state.yoff -= e.deltaY;
-    }
-
-    render();
+  const render = (projects) => {
+    projects.map((project) => row(parent, project));
   };
 
   const addEventListeners = () => {
-    window.addEventListener("wheel", disableDefault, { passive: false });
-    parent.addEventListener("wheel", touchPanZoom, { passive: false });
-
-    keyboard(state, render, pbox);
-    zoom(parent, state, render, pbox);
-    addDragListeners();
-  };
-
-  const addDragListeners = () => {
-    const dragger = drag(parent, state, render);
-
-    parent.addEventListener("mousedown", dragger.start, false);
-    parent.addEventListener("mousemove", dragger.move, false);
-    parent.addEventListener("mouseup", dragger.end, false);
-  };
-
-  const render = () => {
-    window.requestAnimationFrame(() => {
-      state.element.style.transform = `translate3d(${state.xoff}px,${
-        state.yoff
-      }px,0px)
-       scale(${state.scale})`;
+    new ScrollBooster({
+      viewport: document.querySelector(".viewport"),
+      content: parent,
+      scrollMode: "native",
+      onUpdate: (e) => setOpacity(e),
     });
   };
 
   // -------------------------------------------
   // Public methods
   // -------------------------------------------
-  const element = (el, reset) => {
-    if (!el) el = opts.element;
-    state.element = el;
-
-    if (!reset) {
-      setElementSize(el);
-    }
-  };
-
-  const scale = (factor) => {};
-
   setup();
   return {
     init,
-    element,
-    scale,
   };
 }
