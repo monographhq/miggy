@@ -1,8 +1,9 @@
+
 const randomInt = (min = 2, max = 5) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export default function(i, date) {
+export default function (i, date) {
   const COLORS = ["#D96EE9", "#41EAD4", "#3182FB", "#FDBD2F", "#5541EA"];
   const PHASES = ["SD", "DD", "CD", "BID", "CA"];
 
@@ -20,6 +21,7 @@ export default function(i, date) {
     if (probability > 4 || i > 2) return randomInt(50, 100);
     return 100;
   };
+
 
   const createPhase = (i) => {
     return {

@@ -3,6 +3,11 @@ import row from "./row.js";
 import ScrollBooster from "../node_modules/scrollbooster/src/index.js";
 
 const left = document.querySelector(".left");
+const today = new Date();
+let weekday = today.toLocaleString("default", { weekday: "short" });
+let mm = today.toLocaleString("default", { month: "short" });
+let dd = today.getDate();
+document.querySelector('.mig-today-date > span').innerHTML = weekday + ', ' + mm + ' ' + dd;
 
 const setOpacity = (e) => {
   const opacity = Math.min(
@@ -15,9 +20,8 @@ const setOpacity = (e) => {
   left.style.transform = `scale(${scale})`;
 };
 
-export default function(options = {}) {
+export default function (options = {}) {
   let parent = null;
-  const today = new Date();
   const projects = [];
   let opts = {};
 
