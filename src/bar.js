@@ -12,6 +12,8 @@ export default function (row, project, phase) {
         <div class="mig-time" style="background:${project.color}">
           <div class="mig-time-abbr">${phase.abbr}</div>
         </div>
+        </div>
+        </div>
       </div>
     `
   );

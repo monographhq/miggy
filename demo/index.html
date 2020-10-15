@@ -34,7 +34,7 @@
         height: 100%;
         width: 70%;
         background: rgba(255, 255, 255, 0.5);
-        z-index: 2;
+        z-index: 3;
       }
       .mig-today {
         position: absolute;
@@ -111,14 +111,28 @@
         justify-content: center;
         border: 3px solid #fff;
       }
+      .mig-time-pause {
+        border-radius: 30px;
+        z-index: 2;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: repeating-linear-gradient(
+                      135deg,
+                      rgba(255,255,255,0.5),
+                      rgba(255,255,255,0.5), 16px,
+                      transparent 16px,
+                      transparent 32px
+                      );
+      }
       .mig-time {
         position: relative;
         width: 100%;
         height: 60px;
         border-radius: 30px;
-        background: orange;
       }
       .mig-time-abbr {
+        z-index: 3;
         color: #fff;
         background: rgba(0, 0, 0, 0.15);
         position: absolute;
@@ -130,6 +144,44 @@
         top: 8px;
         left: 8px;
         padding: 0px 12px;
+      }
+      .mig-time-end {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.15);
+        position: absolute;
+        height: 44px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 8px;
+        right: 8px;
+        z-index: 4;
+        padding: 0px 12px;
+      }
+      .mig-time-mid {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.15);
+        position: absolute;
+        height: 44px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 8px;
+        z-index: 4;
+        padding: 0px 12px;
+      }
+      .mig-tooltip {
+        position: absolute;
+        z-index: 5;
+        display: flex;
+        background-color: #FFF;
+        padding: 1rem 1rem;
+        border-radius: 8px;
+        top: -45px;
+        width: 100px;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
       }
     </style>
   </head>
@@ -147,8 +199,9 @@
       max-width: 1200px;
       margin: auto;
       position: relative;
-      z-index: 3;
+      z-index: 4;
       pointer-events: none;
+      display: flex;
     }
     .left {
       width: 60%;
@@ -157,6 +210,16 @@
       /* height: 580px; */
       /* backdrop-filter: blur(4px); */
       /* background-color: rgba(255, 255, 255, 0.1); */
+    }
+    .indicator {
+      border: 1px solid #5541EA;
+      border-radius: 30px;
+      position: absolute;
+      right: 0;
+      padding: .75rem 1.5rem;
+    }
+    .indicator span {
+      margin-left: 0.5rem;
     }
     h2 {
       margin: 1rem 0 3rem;
@@ -189,6 +252,9 @@
             Schedule in one simple view. Keep tabs on project performance across
             the firm without having to generate a report.
           </p>
+        </div>
+        <div class="indicator">
+          <img src="../src/arrow.svg" alt="Arrow"/><span class="sohne-mono">Drag me</span>
         </div>
       </div>
       <div class="view">
