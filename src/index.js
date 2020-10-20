@@ -13,6 +13,7 @@ const setDate = () => {
   document.querySelector('.mig-today-date > span').innerHTML = weekday + ', ' + mm + ' ' + dd;
 }
 
+
 const setOpacity = (e) => {
   const opacity = Math.min(
     Math.max((300 - parseInt(e.position.x)) / 300, 0),
@@ -68,17 +69,17 @@ export default function (options = {}) {
         //Creates the tooltips
         const toolTipPos = midMarker.getBoundingClientRect().x;
         const dist = toolTipPos - datePos;
-        const subToday = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-        const distRounded = parseInt((dist / 40).toFixed(0));
+        const subToday = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+        const distRounded = parseInt((dist / 60).toFixed(0));
         let subDate = today.getDate() + distRounded;
         let subMonth = months[today.getMonth()];
         let subYear = today.getFullYear();
         if (Math.sign(subDate) === -1) {
           if (today.getMonth() !== 0) {
             subMonth = months[today.getMonth() - 1];
-            subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+            subDate = (new Date(today.getFullYear(), today.getMonth(), 0).getDate()) + subDate;
           } else {
-            subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+            subDate = (new Date(today.getFullYear(), today.getMonth(), 0).getDate()) + subDate;
             subYear = today.getFullYear() - 1;
             subMonth = months[11];
           }
@@ -87,6 +88,7 @@ export default function (options = {}) {
             subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
             subMonth = months[today.getMonth() + 1];
           } else {
+            subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
             subMonth = months[0];
             subYear = today.getFullYear() + 1;
           }
@@ -110,16 +112,16 @@ export default function (options = {}) {
       const toolTipPos = endMarker.getBoundingClientRect().x;
       const dist = toolTipPos - datePos;
       const subToday = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-      const distRounded = parseInt((dist / 40).toFixed(0));
+      const distRounded = parseInt((dist / 60).toFixed(0));
       let subDate = today.getDate() + distRounded;
       let subMonth = months[today.getMonth()];
       let subYear = today.getFullYear();
       if (Math.sign(subDate) === -1) {
         if (today.getMonth() !== 0) {
           subMonth = months[today.getMonth() - 1];
-          subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+          subDate = (new Date(today.getFullYear(), today.getMonth(), 0).getDate()) + subDate;
         } else {
-          subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+          subDate = (new Date(today.getFullYear(), today.getMonth(), 0).getDate()) + subDate;
           subYear = today.getFullYear() - 1;
           subMonth = months[11];
         }
@@ -128,6 +130,7 @@ export default function (options = {}) {
           subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
           subMonth = months[today.getMonth() + 1];
         } else {
+          subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
           subMonth = months[0];
           subYear = today.getFullYear() + 1;
         }
