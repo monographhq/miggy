@@ -3,12 +3,12 @@ import row from "./row.js";
 import ScrollBooster from "../node_modules/scrollbooster/src/index.js";
 
 const left = document.querySelector(".left");
-const indicator = document.querySelector(".indicator");
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
+const datePos = document.querySelector(".mig-today").getBoundingClientRect().x;
 const today = new Date();
 let weekday = today.toLocaleString("default", { weekday: "short" });
 let mm = today.toLocaleString("default", { month: "short" });
 let dd = today.getDate();
-
 const setDate = () => {
   document.querySelector('.mig-today-date > span').innerHTML = weekday + ', ' + mm + ' ' + dd;
 }
@@ -22,7 +22,6 @@ const setOpacity = (e) => {
 
   left.style.opacity = opacity;
   left.style.transform = `scale(${scale})`;
-  indicator.style.opacity = opacity;
 };
 
 export default function (options = {}) {
@@ -56,35 +55,90 @@ export default function (options = {}) {
       const width = parent[i].offsetWidth;
       const starCount = Math.floor((width - 16 - 88) / 132);
 
-      //Creates the middle milestone markers and tooltips
+      //Creates the middle milestone markers
       for (let j = 1; j < starCount; ++j) {
         const midMarker = document.createElement("div");
-        const toolTip = document.createElement("div");
         const leftPos = String((j * width / starCount) - 22);
         midMarker.classList.add("mig-time-mid");
         midMarker.style.cssText = ("display: flex; justify-content: end;")
         midMarker.style.left = leftPos + 'px';
         midMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
-        toolTip.innerHTML = 'Milestone';
+        parent[i].appendChild(midMarker);
+
+        //Creates the tooltips
+        const toolTipPos = midMarker.getBoundingClientRect().x;
+        const dist = toolTipPos - datePos;
+        const subToday = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        const distRounded = parseInt((dist / 40).toFixed(0));
+        let subDate = today.getDate() + distRounded;
+        let subMonth = months[today.getMonth()];
+        let subYear = today.getFullYear();
+        if (Math.sign(subDate) === -1) {
+          if (today.getMonth() !== 0) {
+            subMonth = months[today.getMonth() - 1];
+            subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+          } else {
+            subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+            subYear = today.getFullYear() - 1;
+            subMonth = months[11];
+          }
+        } else if (subDate > subToday) {
+          if (today.getMonth() !== 11) {
+            subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
+            subMonth = months[today.getMonth() + 1];
+          } else {
+            subMonth = months[0];
+            subYear = today.getFullYear() + 1;
+          }
+        }
+        let fullDate = subMonth.toString() + ' ' + subDate.toString() + ', ' + subYear.toString();
+        const toolTip = document.createElement("div");
+        toolTip.innerHTML = `<div class='mig-tooltip-tag'>${parent[i].querySelector("div").innerText}</div><div>MoneyGantt™</div><div class='mig-tooltip-date'>${fullDate}</div>`;
         toolTip.classList.add("mig-tooltip");
         toolTip.style.left = leftPos - 100 + 'px';
         toolTip.style.display = 'none';
         parent[i].appendChild(toolTip);
-        parent[i].appendChild(midMarker);
       }
 
-      //Creates the end milestone markers and tooltips
+      //Creates the end milestone markers
       const endMarker = document.createElement("div");
-      const endTooltip = document.createElement("div");
       endMarker.classList.add("mig-time-end");
       endMarker.style.cssText = ("display: flex; justify-content: end;")
       endMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
-      endTooltip.innerHTML = 'Milestone';
+      parent[i].appendChild(endMarker);
+      //Creates the end tooltips
+      const toolTipPos = endMarker.getBoundingClientRect().x;
+      const dist = toolTipPos - datePos;
+      const subToday = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      const distRounded = parseInt((dist / 40).toFixed(0));
+      let subDate = today.getDate() + distRounded;
+      let subMonth = months[today.getMonth()];
+      let subYear = today.getFullYear();
+      if (Math.sign(subDate) === -1) {
+        if (today.getMonth() !== 0) {
+          subMonth = months[today.getMonth() - 1];
+          subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+        } else {
+          subDate = (new Date(today.getFullYear(), today.getMonth() - 1, 0).getDate()) + subDate;
+          subYear = today.getFullYear() - 1;
+          subMonth = months[11];
+        }
+      } else if (subDate > subToday) {
+        if (today.getMonth() !== 11) {
+          subDate = subDate - (new Date(today.getFullYear(), today.getMonth(), 0).getDate());
+          subMonth = months[today.getMonth() + 1];
+        } else {
+          subMonth = months[0];
+          subYear = today.getFullYear() + 1;
+        }
+      }
+      let fullDate = subMonth.toString() + ' ' + subDate.toString() + ', ' + subYear.toString();
+      const endTooltip = document.createElement("div");
+      endTooltip.innerHTML = `<div class='mig-tooltip-tag'>${parent[i].querySelector("div").innerText}</div><div>MoneyGantt™</div><div class='mig-tooltip-date'>${fullDate}</div>`;
       endTooltip.classList.add("mig-tooltip");
       endTooltip.style.left = width - 8 - 44 - 100 + 'px';
       endTooltip.style.display = 'none';
       parent[i].appendChild(endTooltip);
-      parent[i].appendChild(endMarker);
     }
   }
 
@@ -92,10 +146,10 @@ export default function (options = {}) {
     const allMilestones = Array.from(document.querySelectorAll('.mig-time-mid, .mig-time-end'));
     allMilestones.map((milestone) => {
       milestone.addEventListener('mouseenter', function (e) {
-        e.target.previousSibling.style.display = 'block';
+        e.target.nextSibling.style.display = 'block';
       });
       milestone.addEventListener('mouseleave', function (e) {
-        e.target.previousSibling.style.display = 'none';
+        e.target.nextSibling.style.display = 'none';
       })
     })
   }
