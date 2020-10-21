@@ -11,10 +11,10 @@
     <style>
       .view {
         position: absolute;
-        top: 0;
-        width: 100%;
-        height: 600px;
-        overflow: hidden;
+          top: 0;
+          width: 100%;
+          height: 600px;
+          overflow: hidden;
       }
       .viewport {
         position: relative;
@@ -180,6 +180,7 @@
         padding: 6px 12px;
         border-radius: 4px;
         top: -70px;
+        white-space: nowrap;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
       }
       .mig-tooltip-tag {
@@ -195,6 +196,15 @@
         font-size: 0.75rem;
         color: #a0a8ae;
       }
+      @media only screen and (min-width: 992px){
+        .view {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 600px;
+          overflow: hidden;
+        }
+      }
     </style>
   </head>
 
@@ -202,10 +212,6 @@
     body {
       margin: 0;
       font-family: sans-serif;
-    }
-    .fresh-gantt {
-      position: relative;
-      margin-top: 8rem;
     }
     .container {
       max-width: 1200px;
@@ -216,12 +222,9 @@
       display: flex;
     }
     .left {
-      width: 60%;
+      width: 100%;
       padding-top: 1rem;
       transform-origin: 30% 30%;
-      /* height: 580px; */
-      /* backdrop-filter: blur(4px); */
-      /* background-color: rgba(255, 255, 255, 0.1); */
     }
     .indicator {
       border: 1px solid #5541EA;
@@ -236,21 +239,43 @@
     h2 {
       margin: 1rem 0 3rem;
       font-family: "PilatCompressed-Heavy";
-      font-size: 82px;
-      line-height: 80%;
+      font-size: 56px;
+      line-height: 85%;
+      padding: 0 20px;
       letter-spacing: -1px;
       text-transform: uppercase;
     }
     p {
       font-family: Söhne;
-      font-size: 20px;
-      line-height: 32px;
-      max-width: 400px;
+      font-size: 18px;
+      max-width: 100%;
+      padding: 0 20px;
+      line-height: 150%;
     }
     a {
       display: flex;
       background: #5541ea;
       color: #fff;
+    }
+    @media only screen and (min-width: 992px){
+      .fresh-gantt {
+        position: relative;
+        margin-top: 8rem;
+      }
+      .left {
+        width: 60%;
+      }
+      h2 {
+        font-size: 82px;
+        line-height: 80%;
+        padding: 0;
+      }
+      p {
+        padding: 0;
+        max-width: 400px;
+        font-size: 20px;
+        line-height: 32px;
+      }
     }
   </style>
 

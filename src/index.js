@@ -58,6 +58,17 @@ export default function (options = {}) {
 
       //Creates the middle milestone markers
       for (let j = 1; j < starCount; ++j) {
+        let phaseText = parent[i].querySelector("div").innerText;
+        let tooltipText = "";
+        if (phaseText === 'SD') {
+          tooltipText = "Preliminary drawings";
+        } else if (phaseText === 'DD') {
+          tooltipText = "Outline specification"
+        } else if (phaseText === 'CD') {
+          tooltipText = "Permit approval"
+        } else if (phaseText === 'BID') {
+          tooltipText = "Drawings and Specs"
+        }
         const midMarker = document.createElement("div");
         const leftPos = String((j * width / starCount) - 22);
         midMarker.classList.add("mig-time-mid");
@@ -95,14 +106,29 @@ export default function (options = {}) {
         }
         let fullDate = subMonth.toString() + ' ' + subDate.toString() + ', ' + subYear.toString();
         const toolTip = document.createElement("div");
-        toolTip.innerHTML = `<div class='mig-tooltip-tag'>${parent[i].querySelector("div").innerText}</div><div>MoneyGantt™</div><div class='mig-tooltip-date'>${fullDate}</div>`;
+        toolTip.innerHTML = `<div class='mig-tooltip-tag'>${phaseText}</div><div>${tooltipText}</div><div class='mig-tooltip-date'>${fullDate}</div>`;
         toolTip.classList.add("mig-tooltip");
-        toolTip.style.left = leftPos - 100 + 'px';
+        toolTip.style.display = 'block';
+        parent[i].appendChild(toolTip);
+        const toolTipWidth = toolTip.offsetWidth;
+        parent[i].removeChild(toolTip);
         toolTip.style.display = 'none';
+        toolTip.style.left = leftPos - (toolTipWidth / 2) + 22 + 'px';
         parent[i].appendChild(toolTip);
       }
 
       //Creates the end milestone markers
+      let phaseText = parent[i].querySelector("div").innerText;
+      let tooltipText = "";
+      if (phaseText === 'SD') {
+        tooltipText = "Drawings complete";
+      } else if (phaseText === 'DD') {
+        tooltipText = "Specifications complete"
+      } else if (phaseText === 'CD') {
+        tooltipText = "Contractor handoff"
+      } else if (phaseText === 'BID') {
+        tooltipText = "Negotiation finish"
+      }
       const endMarker = document.createElement("div");
       endMarker.classList.add("mig-time-end");
       endMarker.style.cssText = ("display: flex; justify-content: end;")
@@ -137,10 +163,14 @@ export default function (options = {}) {
       }
       let fullDate = subMonth.toString() + ' ' + subDate.toString() + ', ' + subYear.toString();
       const endTooltip = document.createElement("div");
-      endTooltip.innerHTML = `<div class='mig-tooltip-tag'>${parent[i].querySelector("div").innerText}</div><div>MoneyGantt™</div><div class='mig-tooltip-date'>${fullDate}</div>`;
+      endTooltip.innerHTML = `<div class='mig-tooltip-tag'>${phaseText}</div><div>${tooltipText}</div><div class='mig-tooltip-date'>${fullDate}</div>`;
       endTooltip.classList.add("mig-tooltip");
-      endTooltip.style.left = width - 8 - 44 - 100 + 'px';
+      endTooltip.style.display = 'block';
+      parent[i].appendChild(endTooltip);
+      const toolTipWidth = endTooltip.offsetWidth;
+      parent[i].removeChild(endTooltip);
       endTooltip.style.display = 'none';
+      endTooltip.style.left = width - 8 - 22 - (toolTipWidth / 2) + 'px';
       parent[i].appendChild(endTooltip);
     }
   }
@@ -194,6 +224,7 @@ export default function (options = {}) {
       content: parent,
       scrollMode: "native",
       onUpdate: (e) => setOpacity(e),
+      emulateScroll: true,
     });
   };
 
