@@ -67,7 +67,9 @@ export default function (options = {}) {
         } else if (phaseText === 'CD') {
           tooltipText = "Permit approval"
         } else if (phaseText === 'BID') {
-          tooltipText = "Drawings and Specs"
+          tooltipText = "Drawings and specs"
+        } else if (phaseText === 'CA') {
+          tooltipText = "Field observation report"
         }
         const midMarker = document.createElement("div");
         const leftPos = String((j * width / starCount) - 22);
@@ -128,6 +130,8 @@ export default function (options = {}) {
         tooltipText = "Contractor handoff"
       } else if (phaseText === 'BID') {
         tooltipText = "Negotiation finish"
+      } else if (phaseText === 'CA') {
+        tooltipText = "Field observation report"
       }
       const endMarker = document.createElement("div");
       endMarker.classList.add("mig-time-end");
