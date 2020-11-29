@@ -255,7 +255,7 @@
       text-transform: uppercase;
     }
     p {
-      font-family: Söhne;
+      font-family: "Söhne";
       font-size: 18px;
       max-width: 100%;
       padding: 0 20px;
@@ -314,13 +314,19 @@
       </div>
     </section>
 
-    <script type="module">
-      import Gantt from "../src/index.js";
-
+    <script src="../dist/miggy.js"></script>
+    <script>
       const parent = document.querySelector(".mig");
+      const Miggy = miggy.default();
+      Miggy.init(parent)
+    </script>
+    <script type="module">
+      // import Gantt from "../src/index.js";
 
-      const gantt = Gantt();
-      gantt.init(parent);
+      // const parent = document.querySelector(".mig");
+
+      // const gantt = Gantt();
+      // gantt.init(parent);
     </script>
   </body>
 </html>
