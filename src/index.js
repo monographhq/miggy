@@ -2,6 +2,12 @@ import project from "./project.js";
 import row from "./row.js";
 import ScrollBooster from "../node_modules/scrollbooster/src/index.js";
 
+const star = /*html*/`
+  <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.20805 13.942L3.51716 16.8142L4.60403 10.7307L0 6.42244L6.36261 5.53488L9.20805 0L12.0535 5.53488L18.4161 6.42244L13.8121 10.7307L14.8989 16.8142L9.20805 13.942Z" fill="white"/>
+  </svg>
+`
+
 const left = document.querySelector(".left");
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"];
 const datePos = document.querySelector(".mig-today").getBoundingClientRect().x;
@@ -76,7 +82,8 @@ export default function (options = {}) {
         midMarker.classList.add("mig-time-mid");
         midMarker.style.cssText = ("display: flex; justify-content: end;")
         midMarker.style.left = leftPos + 'px';
-        midMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
+        // midMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
+        midMarker.innerHTML = star;
         parent[i].appendChild(midMarker);
 
         //Creates the tooltips
@@ -136,7 +143,8 @@ export default function (options = {}) {
       const endMarker = document.createElement("div");
       endMarker.classList.add("mig-time-end");
       endMarker.style.cssText = ("display: flex; justify-content: end;")
-      endMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
+      // endMarker.innerHTML = `<img src=${'../src/star.svg'} />`;
+      endMarker.innerHTML = star;
       parent[i].appendChild(endMarker);
       //Creates the end tooltips
       const toolTipPos = endMarker.getBoundingClientRect().x;

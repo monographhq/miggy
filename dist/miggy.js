@@ -137,7 +137,7 @@ var miggy = (() => {
           const endMarker = document.createElement("div");
           endMarker.classList.add("mig-time-end");
           endMarker.style.cssText = "display: flex; justify-content: end;";
-          endMarker.innerHTML = `<img src=${"../src/star.svg"} />`;
+          // endMarker.innerHTML = `<img src=${"../src/star.svg"} />`;
           parent2[i].appendChild(endMarker);
           const toolTipPos = endMarker.getBoundingClientRect().x;
           const dist = toolTipPos - datePos;

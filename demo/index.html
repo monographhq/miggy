@@ -314,19 +314,19 @@
       </div>
     </section>
 
-    <script src="../dist/miggy.js"></script>
+    <!-- <script src="../dist/miggy.js"></script>
     <script>
       const parent = document.querySelector(".mig");
       const Miggy = miggy.default();
       Miggy.init(parent)
-    </script>
+    </script> -->
     <script type="module">
-      // import Gantt from "../src/index.js";
+      import Miggy from "../src/index.js";
 
-      // const parent = document.querySelector(".mig");
+      const parent = document.querySelector(".mig");
 
-      // const gantt = Gantt();
-      // gantt.init(parent);
+      const miggy = Miggy();
+      miggy.init(parent);
     </script>
   </body>
 </html>

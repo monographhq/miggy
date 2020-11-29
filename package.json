@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "http-server -c-1",
     "open": "open 'http://localhost:8080/demo'",
-    "build": "npx esbuild --bundle src/index.js --outfile=dist/miggy.js --format=iife --global-name=miggy"
+    "build": "npx esbuild --bundle src/index.js --outfile=dist/miggy.js --format=iife --global-name=Miggy"
   },
   "devDependencies": {
     "esbuild": "^0.6.3",
