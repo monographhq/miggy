@@ -17,7 +17,7 @@
   },
   "name": "@moeamaya/monograph-miggy",
   "description": "![Image of Enhance](enhance.png)",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "dist/miggy.js",
   "repository": {
     "type": "git",
