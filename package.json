@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "http-server -c-1",
     "open": "open 'http://localhost:8080/demo'",
-    "build": "npx esbuild --bundle src/index.js --outfile=dist/enhance.js --format=esm"
+    "build": "npx esbuild --bundle src/index.js --outfile=dist/miggy.js --format=iife --global-name=Miggy"
   },
   "devDependencies": {
     "esbuild": "^0.6.3",
@@ -15,19 +15,19 @@
     "hotkeys-js": "^3.8.1",
     "scrollbooster": "^3.0.2"
   },
-  "name": "@wavma/enhance",
+  "name": "@moeamaya/monograph-miggy",
   "description": "![Image of Enhance](enhance.png)",
-  "version": "1.0.5",
-  "main": "dist/enhance.js",
+  "version": "0.8.1",
+  "main": "dist/miggy.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wavma/enhance.git"
+    "url": "git+https://github.com/monographhq/miggy.git"
   },
   "keywords": [],
   "author": "Moe Amaya",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wavma/enhance/issues"
+    "url": "https://github.com/monographhq/miggy/issues"
   },
-  "homepage": "https://github.com/wavma/enhance#readme"
+  "homepage": "https://github.com/monographhq/miggy#readme"
 }
