@@ -229,12 +229,18 @@
         }
 
         .mig {
-          transform: scale(1) translateX(calc((100vw - 1440px)/2));
+          transform: scale(1);
           margin-left: 0;
         }
 
         .mig-past {
           width: 70%;
+        }
+      }
+
+      @media only scren and (min-width: 1440px) {
+        .mig {
+          transform: scale(1) translateX(calc((100vw - 1440px)/2));
         }
       }
 
