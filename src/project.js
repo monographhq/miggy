@@ -5,7 +5,7 @@ const randomInt = (min = 2, max = 5) => {
 };
 
 export default function (i, date) {
-  const COLORS = ["#D96EE9", "#41EAD4", "#3182FB", "#FDBD2F", "#5541EA"];
+  const COLORS = ["#ff0000", "#41EAD4", "#3182FB", "#FDBD2F", "#5541EA"];
   const PHASES = ["SD", "DD", "CD", "BID", "CA"];
 
   const setDate = () => {

@@ -248,7 +248,7 @@ var Miggy = (() => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
   function project_default(i, date) {
-    const COLORS = ["#D96EE9", "#41EAD4", "#3182FB", "#FDBD2F", "#5541EA"];
+    const COLORS = ["#ff0000", "#41EAD4", "#3182FB", "#FDBD2F", "#5541EA"];
     const PHASES = ["SD", "DD", "CD", "BID", "CA"];
     const setDate = () => {
       const ourDate = new Date();
