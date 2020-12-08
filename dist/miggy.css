@@ -269,7 +269,7 @@
       line-height: 32px;
     }
   }
-  @media only scren and (min-width: 1440px) {
+  @media only screen and (min-width: 1440px) {
     .mig {
       transform: scale(1) translateX(calc((100vw - 1440px)/2));
     }
